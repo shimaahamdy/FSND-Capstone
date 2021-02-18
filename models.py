@@ -35,8 +35,8 @@ class Moive(db.Model):
   __tablename__ = 'moive'
   
   id = Column(Integer, primary_key=True)
-  title = Column(String)
-  realse_date = Column(DateTime)
+  title = Column(String,nullable=False)
+  realse_date = Column(DateTime,nullable=False)
   category = Column(String)
   rate = Column(Integer)
   
@@ -75,8 +75,8 @@ class Actor(db.Model):
   __tablename__ = 'actor'
 
   id = Column(Integer, primary_key=True)
-  name = Column(String)
-  gender = Column(String)
+  name = Column(String,nullable=False)
+  gender = Column(String,nullable=False)
   age = Column(Integer)
   
   
