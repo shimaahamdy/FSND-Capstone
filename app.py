@@ -116,7 +116,7 @@ def create_app(test_config=None):
   def delete_moive(payload, moive_id):
     # get moive with id
     moive = Moive.query.filter(Moive.id == moive_id).one_or_none()
-   
+    show_delted_moive = moive
     # respond with a 404 error if <id> is not found
     if not moive:
       abort(404)
@@ -127,7 +127,7 @@ def create_app(test_config=None):
       # return json object format for moive
       return jsonify({
         'success': True,
-        'delete': moive_id
+        'delete': show_delted_moive.format()
         })
     except BaseException:
       abort(422)
@@ -139,7 +139,7 @@ def create_app(test_config=None):
   def delete_actor(payload, actor_id):
     # get actor with id
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
-   
+    show_delted_actor = actor
     # respond with a 404 error if <id> is not found
     if not actor:
       abort(404)
@@ -150,7 +150,7 @@ def create_app(test_config=None):
       # return json object format for moive
       return jsonify({
         'success': True,
-        'delete': actor_id
+        'delete': show_delted_actor.format()
         })
     except BaseException:
         abort(422)
