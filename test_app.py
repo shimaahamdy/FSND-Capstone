@@ -177,16 +177,6 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['moive'])
 
-    def test_update_moive(self):
-        res = self.client().patch('/moives/4',json=self.new_movie,headers=self.director_header)
-        data = json.loads(res.data)
-        
-        moive = Moive.query.filter(Moive.id == 4).one_or_none()
-
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['moive'])
-        self.assertEqual(moive,None)
 
     def test_404_update_moive_not_exist(self):
         res = self.client().patch('/moives/999',json=self.new_movie,headers=self.director_header)
@@ -205,7 +195,7 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actor'])
-        seld.assertEqual(actor,None)
+        self.assertEqual(actor,None)
 
     def test_404_update_actor_not_exist(self):
         res = self.client().patch('/actor/999',json=self.new_movie,headers=self.director_header)

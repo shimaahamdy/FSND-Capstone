@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, String, Integer, create_engine,DateTime
+from sqlalchemy import Column, String, Integer, create_engine,DateTime, Table, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -26,9 +26,9 @@ def setup_db(app, database_path=database_path):
 # split relation with assoication table (actors)
 # actors have moive id and actor id as foregin keys
 
-actors = db.Table("actors",
+actors = db.Table("actors",db.Model.metadata,
                   db.Column("actor_id", db.Integer, db.ForeignKey("actor.id")),
-                  db.Column("movie_id", db.Integer, db.ForeignKey("movie.id")),
+                  db.Column("movie_id", db.Integer, db.ForeignKey("moive.id")),
                   )
 # Moives 
 class Moive(db.Model):  

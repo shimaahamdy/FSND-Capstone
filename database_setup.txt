@@ -1,0 +1,33 @@
+#copy and paste in psql shell for set local database:
+
+drop database capstone;
+creat database capstone;
+
+#run app here to create tables
+\c capstone
+
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive1','1998-05-07','cat1',3);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive','2021-02-02','cat2',8);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive3','2021-10-10','cat3',5);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive4','2022-06-11','cat4',4);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive5','2023-08-7','cat5',6);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive6','2020-02-20','cat6',2);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive7','2025-04-15','cat4',7);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive8','2026-11-20','cat6',9);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive9','2020-02-8','cat4',5);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive10','2024-03-12','cat5',2);
+
+
+INSERT INTO Actor(name, gender, age) VALUES ('actor1','male',32);
+INSERT INTO Actor(name, gender, age) VALUES ('actor2','female',52);
+INSERT INTO Actor(name, gender, age) VALUES ('actor3','female',35);
+INSERT INTO Actor(name, gender, age) VALUES ('actor4','male',80);
+INSERT INTO Actor(name, gender, age) VALUES ('actor5','female',22);
+INSERT INTO Actor(name, gender, age) VALUES ('actor6','male',19);
+INSERT INTO Actor(name, gender, age) VALUES ('actor7','male',44);
+INSERT INTO Actor(name, gender, age) VALUES ('actor8','female',58);
+INSERT INTO Actor(name, gender, age) VALUES ('actor9','male',12);
+INSERT INTO Actor(name, gender, age) VALUES ('actor10','female',41);
+INSERT INTO Actor(name, gender, age) VALUES ('actor11','female',58);
+INSERT INTO Actor(name, gender, age) VALUES ('actor12','male',12);
+INSERT INTO Actor(name, gender, age) VALUES ('actor13','female',41);
