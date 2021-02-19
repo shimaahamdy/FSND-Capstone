@@ -189,21 +189,18 @@ class CastingAgncyTestCase(unittest.TestCase):
     def test_update_actor(self):
         res = self.client().patch('/actors/8',json=self.new_actor,headers=self.producer_header)
         data = json.loads(res.data)
-        
-        actor = Actor.query.filter(Actor.id == 8).one_or_none()
-
+    
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actor'])
 
     def test_404_update_actor_not_exist(self):
-        res = self.client().patch('/actor/999',json=self.new_movie,headers=self.director_header)
+        res = self.client().patch('/actor/999',json=self.new_actor,headers=self.director_header)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'resource not found')
-    
     
 # Make the tests conveniently executable
 if __name__ == "__main__":
