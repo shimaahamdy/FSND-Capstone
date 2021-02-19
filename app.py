@@ -4,7 +4,7 @@ from flask import Flask, request, abort, jsonify
 from sqlalchemy import exc
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-#from auth import AuthError, requires_auth
+from auth import AuthError, requires_auth
 #import models
 from models import setup_db, Actor, Moive, actors
 
@@ -25,8 +25,8 @@ def create_app(test_config=None):
   #view moives endpoint
   #allowed to (Casting Assistant,Casting Director, Executive Producer)
   @app.route('/moives')
-  #@requires_auth('get:moives')
-  def get_moives():
+  @requires_auth('get:moives')
+  def get_moives(payload):
     # select all moives from database
     selection = Moive.query.all()
 
@@ -39,8 +39,8 @@ def create_app(test_config=None):
   #view actors endpoint
   #allowed to (Casting Assistant,Casting Director, Executive Producer)
   @app.route('/actors')
-  #@requires_auth('get:actors')
-  def get_actors():
+  @requires_auth('get:actors')
+  def get_actors(payload):
     # select all actors from database
     selection = Actor.query.all()
 
@@ -53,8 +53,8 @@ def create_app(test_config=None):
   #create moive endpoint
   # allowed to (Executive Producer) 
   @app.route('/moives', methods=['POST'])
-  #@requires_auth('post:moives')
-  def create_moive():
+  @requires_auth('post:moives')
+  def create_moive(payload):
     # get requet body and content data of request
     body = request.get_json()
     title = body.get('title')
@@ -82,8 +82,8 @@ def create_app(test_config=None):
   #create actor endpoint
   # allowed to (Casting Director, Executive Producer) 
   @app.route('/actors', methods=['POST'])
-  #@requires_auth('post:actors')
-  def create_actor():
+  @requires_auth('post:actors')
+  def create_actor(payload):
     
     # get requet body and content data of request
     body = request.get_json()
@@ -110,8 +110,8 @@ def create_app(test_config=None):
   #delete moive endpoint
   # allowed to (Executive Producer) 
   @app.route('/moives/<int:moive_id>', methods=['DELETE'])
-  #@requires_auth('delete:moives')
-  def delete_moive(moive_id):
+  @requires_auth('delete:moives')
+  def delete_moive(payload,moive_id):
     # get moive with id
     moive = Moive.query.filter(Moive.id == moive_id).one_or_none()
     show_delted_moive = moive
@@ -133,8 +133,8 @@ def create_app(test_config=None):
   #delete actor endpoint
   # allowed to (Casting Director,Executive Producer) 
   @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-  #@requires_auth('delete:actors')
-  def delete_actor(actor_id):
+  @requires_auth('delete:actors')
+  def delete_actor(payload,actor_id):
     # get actor with id
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
     show_delted_actor = actor
@@ -156,8 +156,8 @@ def create_app(test_config=None):
   #update moive endpoint
   # allowed to (Casting Director,Executive Producer) 
   @app.route('/moives/<int:moive_id>', methods=['PATCH'])
-  #@requires_auth('patch:moives')
-  def update_moive(moive_id):
+  @requires_auth('patch:moives')
+  def update_moive(payload,moive_id):
     
     # get moive with id
     moive = Moive.query.filter(Moive.id == moive_id).one_or_none()
@@ -205,8 +205,8 @@ def create_app(test_config=None):
   #update actor endpoint
   # allowed to (Casting Director,Executive Producer) 
   @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-  #@requires_auth('patch:actors')
-  def update_actor(actor_id):
+  @requires_auth('patch:actors')
+  def update_actor(payload,actor_id):
     
     # get actor with id
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
@@ -284,16 +284,16 @@ def create_app(test_config=None):
       }), 404
 
 
-  #@app.errorhandler(AuthError)
-  #def auth_error(error):
-    # print the error that arise in auth functions
-    #print(error)
-    #return jsonify({
-     # "success": False,
-      #"error": error.status_code,
-     # "code": error.error['code'],
-      #"message": error.error['description']
-    #}), error.status_code
+  @app.errorhandler(AuthError)
+  def auth_error(error):
+     #print the error that arise in auth functions
+    print(error)
+    return jsonify({
+      "success": False,
+      "error": error.status_code,
+      "code": error.error['code'],
+      "message": error.error['description']
+    }), error.status_code
 
   return app
 #run applicatiom

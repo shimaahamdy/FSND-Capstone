@@ -2,7 +2,7 @@ import os
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy import Column, String, Integer, create_engine, DateTime
 from app import create_app
 from models import setup_db, Actor, Moive
 
@@ -14,7 +14,7 @@ class CastingAgncyTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = "capstone_test"
+        self.database_name = "capstone"
         self.database_path = "postgres://{}:{}@{}/{}".format('postgres','love','localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
@@ -26,9 +26,9 @@ class CastingAgncyTestCase(unittest.TestCase):
             # create all tables
             self.db.create_all()
 
-        self.assistant_token = os.getenv('ASSISTANT_TOKEN')
-        self.director_token = os.getenv('DIRECTOR_TOKEN')
-        self.producer_token = os.getenv('PRODUCER_TOKEN')
+        self.assistant_token ='Bearer ' + os.getenv('ASSISTANT_TOKEN')
+        self.director_token = 'Bearer ' + os.getenv('DIRECTOR_TOKEN')
+        self.producer_token = 'Bearer ' + os.getenv('PRODUCER_TOKEN')
 
         self.assistant_header = {'Authorization': self.assistant_token}
         self.director_header = {'Authorization': self.director_token}
@@ -36,8 +36,8 @@ class CastingAgncyTestCase(unittest.TestCase):
 
         self.new_movie = {
             "title":"lala land",
-            "release_date": "5-7-1998",
-            "category":"action",
+            "realse_date": "1998-07-13",
+            "categooory":"action",
             "rate":4
             }
         self.new_actor = {
@@ -116,14 +116,14 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['code'], 'unauthorized')      
         
     def test_delete_moive(self):
-        res = self.client().delete('/moives/2',headers=self.producer_header)
+        res = self.client().delete('/moives/1',headers=self.producer_header)
         data = json.loads(res.data)
         
-        moive = Moive.query.filter(Moive.id == 2).one_or_none()
+        moive = Moive.query.filter(Moive.id == 1).one_or_none()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['delted'])
+        self.assertTrue(data['delete'])
         self.assertEqual(moive, None)
     
     def test_404_delete_moive_not_exist(self):
@@ -135,7 +135,7 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_401_delete_moive_unauth(self):
-        res = self.client().delete('/moives/3',headers=self.assistant_header)
+        res = self.client().delete('/moives/2',headers=self.assistant_header)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
@@ -143,14 +143,14 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['code'], 'unauthorized')
 
     def test_delete_actor(self):
-        res = self.client().delete('/actor/2',headers=self.director_header)
+        res = self.client().delete('/actors/1',headers=self.director_header)
         data = json.loads(res.data)
         
-        actor = Actor.query.filter(Actor.id == 2).one_or_none()
+        actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['delted'])
+        self.assertTrue(data['delete'])
         self.assertEqual(actor, None)
     
     def test_404_delete_actor_not_exist(self):
@@ -162,7 +162,7 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_401_delete_actor_unauth(self):
-        res = self.client().delete('/actor/3',headers=self.assistant_header)
+        res = self.client().delete('/actors/3',headers=self.assistant_header)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
@@ -187,15 +187,14 @@ class CastingAgncyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_update_actor(self):
-        res = self.client().patch('/actor/4',json=self.new_movie,headers=self.producer_header)
+        res = self.client().patch('/actors/8',json=self.new_actor,headers=self.producer_header)
         data = json.loads(res.data)
         
-        actor = Actor.query.filter(Actor.id == 4).one_or_none()
+        actor = Actor.query.filter(Actor.id == 8).one_or_none()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actor'])
-        self.assertEqual(actor,None)
 
     def test_404_update_actor_not_exist(self):
         res = self.client().patch('/actor/999',json=self.new_movie,headers=self.director_header)
