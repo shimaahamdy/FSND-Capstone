@@ -42,7 +42,7 @@ create database called "capstone" run:
 create database castagency;
 ```
 
-### auth dependecny
+### auth instructions
 
 1. Create Auth0 Account
 2. Create a new, single page web application
@@ -115,12 +115,40 @@ python app.py
 
 
 ### Testing
-To run the tests, run
+in sql shell 
+```bash
+drop database castagency;
+createdb castagency;
 ```
-dropdb castagency_test
-createdb castagency_test
-psql castagency_test < castagency
-python test_app.py
+then run in directory 
+```bash
+python app.py
+```
+back to sql shell move to castagency  (\c castagency) enter
+```bash
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive1','1998-05-07','cat1',3);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive','2021-02-02','cat2',8);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive3','2021-10-10','cat3',5);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive4','2022-06-11','cat4',4);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive5','2023-08-7','cat5',6);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive6','2020-02-20','cat6',2);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive7','2025-04-15','cat4',7);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive8','2026-11-20','cat6',9);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive9','2020-02-8','cat4',5);
+INSERT INTO Moive(title, realse_date, category,rate) VALUES ('moive10','2024-03-12','cat5',2);
+INSERT INTO Actor(name, gender, age) VALUES ('actor1','male',32);
+INSERT INTO Actor(name, gender, age) VALUES ('actor2','female',52);
+INSERT INTO Actor(name, gender, age) VALUES ('actor3','female',35);
+INSERT INTO Actor(name, gender, age) VALUES ('actor4','male',80);
+INSERT INTO Actor(name, gender, age) VALUES ('actor5','female',22);
+INSERT INTO Actor(name, gender, age) VALUES ('actor6','male',19);
+INSERT INTO Actor(name, gender, age) VALUES ('actor7','male',44);
+INSERT INTO Actor(name, gender, age) VALUES ('actor8','female',58);
+INSERT INTO Actor(name, gender, age) VALUES ('actor9','male',12);
+INSERT INTO Actor(name, gender, age) VALUES ('actor10','female',41);
+INSERT INTO Actor(name, gender, age) VALUES ('actor11','female',58);
+INSERT INTO Actor(name, gender, age) VALUES ('actor12','male',12);
+INSERT INTO Actor(name, gender, age) VALUES ('actor13','female',41);
 ```
 ## API Reference
 ### Getting Started
@@ -128,7 +156,7 @@ python test_app.py
 Base URL: Casting Agency can run locally
 * Backend Base URL: `http://127.0.0.1:5000/`
 Or hosted
-* host URL : `http://127.0.0.1:5000/`
+* host URL : `https://castfinal.herokuapp.com/`
 
 ### Error Handling
 
@@ -157,7 +185,81 @@ The error that will return when request fail:
 - sample: `curl --location --request GET 'http://127.0.0.1:5000/moives' \ --header 'Authorization: Bearer $TOKEN_VALUE`
 
 ```json
-    
+{
+    "moives": [
+        {
+            "category": "cat1",
+            "id": 1,
+            "rate": 3,
+            "relase_date": "Thu, 07 May 1998 00:00:00 GMT",
+            "title": "moive1"
+        },
+        {
+            "category": "cat2",
+            "id": 2,
+            "rate": 8,
+            "relase_date": "Tue, 02 Feb 2021 00:00:00 GMT",
+            "title": "moive"
+        },
+        {
+            "category": "cat3",
+            "id": 3,
+            "rate": 5,
+            "relase_date": "Sun, 10 Oct 2021 00:00:00 GMT",
+            "title": "moive3"
+        },
+        {
+            "category": "cat4",
+            "id": 4,
+            "rate": 4,
+            "relase_date": "Sat, 11 Jun 2022 00:00:00 GMT",
+            "title": "moive4"
+        },
+        {
+            "category": "cat5",
+            "id": 5,
+            "rate": 6,
+            "relase_date": "Mon, 07 Aug 2023 00:00:00 GMT",
+            "title": "moive5"
+        },
+        {
+            "category": "cat6",
+            "id": 6,
+            "rate": 2,
+            "relase_date": "Thu, 20 Feb 2020 00:00:00 GMT",
+            "title": "moive6"
+        },
+        {
+            "category": "cat4",
+            "id": 7,
+            "rate": 7,
+            "relase_date": "Tue, 15 Apr 2025 00:00:00 GMT",
+            "title": "moive7"
+        },
+        {
+            "category": "cat6",
+            "id": 8,
+            "rate": 9,
+            "relase_date": "Fri, 20 Nov 2026 00:00:00 GMT",
+            "title": "moive8"
+        },
+        {
+            "category": "cat4",
+            "id": 9,
+            "rate": 5,
+            "relase_date": "Sat, 08 Feb 2020 00:00:00 GMT",
+            "title": "moive9"
+        },
+        {
+            "category": "cat5",
+            "id": 10,
+            "rate": 2,
+            "relase_date": "Tue, 12 Mar 2024 00:00:00 GMT",
+            "title": "moive10"
+        }
+    ],
+    "success": true
+}   
 ```
 
 #### GET /actors
@@ -166,7 +268,89 @@ The error that will return when request fail:
 - sample: `curl --location --request GET 'http://127.0.0.1:5000/actors' \ --header 'Authorization: Bearer $TOKEN_VALUE`
 
 ```json
-    
+{
+    "actors": [
+        {
+            "age": 32,
+            "gender": "male",
+            "id": 1,
+            "name": "actor1"
+        },
+        {
+            "age": 52,
+            "gender": "female",
+            "id": 2,
+            "name": "actor2"
+        },
+        {
+            "age": 35,
+            "gender": "female",
+            "id": 3,
+            "name": "actor3"
+        },
+        {
+            "age": 80,
+            "gender": "male",
+            "id": 4,
+            "name": "actor4"
+        },
+        {
+            "age": 22,
+            "gender": "female",
+            "id": 5,
+            "name": "actor5"
+        },
+        {
+            "age": 19,
+            "gender": "male",
+            "id": 6,
+            "name": "actor6"
+        },
+        {
+            "age": 44,
+            "gender": "male",
+            "id": 7,
+            "name": "actor7"
+        },
+        {
+            "age": 58,
+            "gender": "female",
+            "id": 8,
+            "name": "actor8"
+        },
+        {
+            "age": 12,
+            "gender": "male",
+            "id": 9,
+            "name": "actor9"
+        },
+        {
+            "age": 41,
+            "gender": "female",
+            "id": 10,
+            "name": "actor10"
+        },
+        {
+            "age": 58,
+            "gender": "female",
+            "id": 11,
+            "name": "actor11"
+        },
+        {
+            "age": 12,
+            "gender": "male",
+            "id": 12,
+            "name": "actor12"
+        },
+        {
+            "age": 41,
+            "gender": "female",
+            "id": 13,
+            "name": "actor13"
+        }
+    ],
+    "success": true
+}   
 ```
 
 #### POST /moives
@@ -174,10 +358,19 @@ The error that will return when request fail:
   - POST a new moive, which will require the title and realse date 
   - for creation, return moive we creat and its id
 
-- Sample: `curl --location --request POST 'http://127.0.0.1:5000/moives' \ --header 'Authorization: Bearer $TOKEN_VALUE' \ --header 'Content-Type: application/json' \ --data-raw '{"name" : "arwa","age" : 80,"gender":"female"}'`
+- Sample: `curl --location --request POST 'http://127.0.0.1:5000/movies' \ --header 'Authorization: Bearer $TOKEN_VALUE' \ --header 'Content-Type: application/json' \ --data-raw '{"title":"lala land" "realse_date": "1998-07-13","categooory":"action","rate":4}'`
 
 ```json
-
+{
+    "moive": {
+        "category": null,
+        "id": 11,
+        "rate": 4,
+        "relase_date": "Mon, 13 Jul 1998 00:00:00 GMT",
+        "title": "lala land"
+    },
+    "success": true
+}
 ```
 
 #### POST /actors
@@ -185,50 +378,95 @@ The error that will return when request fail:
   - POST a new actor, which will require the name and gender 
   - for creation, return actor we creat and its id
 
-- Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{    "title": "la la land", "relase_data": "1999-02-13", "category": "Action", "rate":5 }'`
+- Sample: `curl --location --request POST 'http://127.0.0.1:5000/actors' \ --header 'Authorization: Bearer $TOKEN_VALUE' \ --header 'Content-Type: application/json' \ --data-raw '{"name":"jane" "gender": "female","age":30}'`
 
 ```json
-
+{
+    "actor": {
+        "age": 30,
+        "gender": "female",
+        "id": 14,
+        "name": "jane"
+    },
+    "success": true
+}
 ```
 #### DELETE /moives
 - General:
-  - POST a new actor, which will require the name and gender 
-  - for creation, return actor we creat and its id
+  - Delete moive with id number
+  - return the delted item
 
-- Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{    "title": "la la land", "relase_data": "1999-02-13", "category": "Action", "rate":5 }'`
+- Sample: `curl  --request DELETE 'http://127.0.0.1:5000/movies/11' \ --header 'Authorization: Bearer $TOKEN_VALUE'`
 
 ```json
-
+{
+    "delete": {
+        "category": null,
+        "id": 11,
+        "rate": 4,
+        "relase_date": "Mon, 13 Jul 1998 00:00:00 GMT",
+        "title": "lala land"
+    },
+    "success": true
+}
 ```
 #### DELETE /actors
 - General:
-  - POST a new actor, which will require the name and gender 
-  - for creation, return actor we creat and its id
+  - Delete an actor with id number
+  - return delted item
 
-- Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{    "title": "la la land", "relase_data": "1999-02-13", "category": "Action", "rate":5 }'`
+- Sample: `curl  --request DELETE 'http://127.0.0.1:5000/actors/14' \ --header 'Authorization: Bearer $TOKEN_VALUE'`
 
 ```json
-
+{
+    "delete": {
+        "age": 30,
+        "gender": "female",
+        "id": 14,
+        "name": "jane"
+    },
+    "success": true
+}
 ```
 #### PSTCH /moives
 - General:
-  - POST a new actor, which will require the name and gender 
-  - for creation, return actor we creat and its id
+  - update current moive with specific data  
+  - return the updated item 
 
-- Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{    "title": "la la land", "relase_data": "1999-02-13", "category": "Action", "rate":5 }'`
+- Sample: `curl --location --request PATCH 'http://127.0.0.1:5000/movies/5' \ --header 'Authorization: Bearer $TOKEN_VALUE' \ --header 'Content-Type: application/json' \ --data-raw '{"title":"lala land" "realse_date": "1998-07-13","categooory":"action","rate":4}'`
 
 ```json
-
+{
+    "moive": [
+        {
+            "category": "cat5",
+            "id": 5,
+            "rate": 4,
+            "relase_date": "Mon, 13 Jul 1998 00:00:00 GMT",
+            "title": "lala land"
+        }
+    ],
+    "success": true
+}
 ```
-#### PSTCJ /actors
+#### PATCH /actors
 - General:
-  - POST a new actor, which will require the name and gender 
-  - for creation, return actor we creat and its id
+  -update current actor with specific data
 
-- Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{    "title": "la la land", "relase_data": "1999-02-13", "category": "Action", "rate":5 }'`
+- Sample: `curl --location --request PATCH 'http://127.0.0.1:5000/actors/5' \ --header 'Authorization: Bearer $TOKEN_VALUE' \ --header 'Content-Type: application/json' \ --data-raw '{"name":"jane" "gender": "female","age":30}'`
 
 ```json
-
+{
+    "actor": [
+        {
+            "age": 30,
+            "gender": "female",
+            "id": 5,
+            "name": "jane"
+        }
+    ],
+    "success": true
+}
 ```
 ## Authors
 - shimaa hamdy
