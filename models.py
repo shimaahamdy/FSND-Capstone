@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, Integer, create_engine,DateTime, Table, F
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-database_name = "capstone"
+database_name = "castagency"
 #updata database with my local device data
 database_path = "postgres://{}:{}@{}/{}".format('postgres','love','localhost:5432', database_name)
 
@@ -103,9 +103,3 @@ class Actor(db.Model):
       'gender': self.gender,
       'age': self.age
     }
-
-
-
-
-  
-  

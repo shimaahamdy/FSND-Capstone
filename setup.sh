@@ -8,5 +8,6 @@ export API_AUDIENCE="http://localhost:5000"
 export CLIENT_ID="Rja1koCOzJx6B30WBYYI0cluf6Eb6WwL"
 export CALLBACK_URL="http://127.0.0.1:5000"
 export ALGORITHMS=['RS256']
-export CLIENT_SECRET='i77KMSfRXRlW16CS6XtlRIaGz395k3TbDQaeLWcNTsE9uyaxlBxrXlCVQTBKK9qr'
+export CLIENT_SECRET="i77KMSfRXRlW16CS6XtlRIaGz395k3TbDQaeLWcNTsE9uyaxlBxrXlCVQTBKK9qr"
+export SQLALCHEMY_DATABASE_URI="postgres://postgres:love@localhost:5432/castagency"
 python test_app.py
